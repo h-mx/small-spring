@@ -11,6 +11,7 @@
     <modules>
         <module>small-spring-step-01</module>
         <module>small-spring-step-02</module>
+        <module>small-spring-step-03</module>
     </modules>
 
     <properties>
@@ -25,6 +26,11 @@
                 <artifactId>junit</artifactId>
                 <version>4.13.2</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>3.2.5</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
