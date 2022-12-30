@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/../../kd100/git/market/market-order-new/assembly/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../kd100/git/market/market-order-new/assembly/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../kd100/git/market/market-order-new/market-order-new-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../kd100/git/market/market-order-new/market-order-new-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../kd100/git/market/market-order-new/market-order-new-pojo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../kd100/git/market/market-order-new/market-order-new-pojo/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../kd100/git/market/market-order-new/market-order-new-provider/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../kd100/git/market/market-order-new/market-order-new-provider/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../kd100/git/market/market-order-new/market-order-new-provider/src/main/resources/${env}" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../kd100/git/market/market-order-new/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../kd100/git/market/market-order-new/src/main/resources" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

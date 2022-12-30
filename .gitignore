@@ -1,30 +1,60 @@
-# maven ignore
+
+# ignore these folders
 target/
-*.jar
-!.mvn/wrapper/*
-*.war
-*.zip
-*.tar
-*.tar.gz
-
-# eclipse ignore
-.settings/
-.project
-.classpath
-
-# idea ignore
 .idea/
-*.ipr
-*.iml
-*.iws
-
-# temp ignore
-*.log
-*.cache
-*.diff
-*.patch
+.settings/
+.vscode/
+bin/
+out/
+ 
+# ignore these files
+.classpath
+.project
+.settings
+.idea
+ 
+# filter databfile、sln file
+*.mdb
+*.ldb
+*.sln
+# class file
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+# compression file
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.via
 *.tmp
-
-# system ignore
+*.err
+*.log
+*.iml
+ 
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
 Thumbs.db
+.factorypath
+.mvn/
+mvnw.cmd
+mvnw
+# Files or folders need to be retained
+# ...
+
+————————————————
+版权声明：本文为CSDN博主「一条小金毛」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/sichen1900/article/details/121927018
