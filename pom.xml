@@ -12,6 +12,7 @@
         <module>small-spring-step-01</module>
         <module>small-spring-step-02</module>
         <module>small-spring-step-03</module>
+        <module>small-spring-step-04</module>
     </modules>
 
     <properties>
@@ -31,6 +32,11 @@
                 <groupId>cglib</groupId>
                 <artifactId>cglib</artifactId>
                 <version>3.2.5</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.8.10</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
