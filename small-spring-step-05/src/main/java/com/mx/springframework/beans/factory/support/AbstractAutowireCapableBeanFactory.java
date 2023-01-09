@@ -61,7 +61,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         } catch (Exception e) {
             throw new BeansException("Error setting property values：" + beanName);
         }
-
     }
 
     public InstantiationStrategy getInstantiationStrategy() {
