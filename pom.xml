@@ -19,6 +19,7 @@
         <module>small-spring-step-08</module>
         <module>small-spring-step-09</module>
         <module>small-spring-step-10</module>
+        <module>small-spring-step-11</module>
     </modules>
 
     <properties>
@@ -34,6 +35,7 @@
                 <version>4.13.2</version>
                 <scope>test</scope>
             </dependency>
+
             <dependency>
                 <groupId>cglib</groupId>
                 <artifactId>cglib</artifactId>
@@ -43,6 +45,18 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>5.8.10</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/aopalliance/aopalliance -->
+            <dependency>
+                <groupId>aopalliance</groupId>
+                <artifactId>aopalliance</artifactId>
+                <version>1.0</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>1.9.7</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
