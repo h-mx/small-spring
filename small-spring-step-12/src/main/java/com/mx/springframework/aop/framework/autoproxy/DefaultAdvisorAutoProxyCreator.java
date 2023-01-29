@@ -15,6 +15,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 /**
+ * BeanPostProcessor implementation that creates AOP proxies based on all candidate
+ * Advisors in the current BeanFactory. This class is completely generic; it contains
+ * no special code to handle any particular aspects, such as pooling aspects.
+ * <p>
+ * 基于当前BeanFactory中的所有候选advisor创建AOP代理的BeanPostProcessor实现。
+ * 这个类是完全通用的;它不包含处理任何特定方面(比如池化方面)的特殊代码
+ *
  * @author Hu-Mingxing
  * @version 1.0
  * @date 2023/1/13
@@ -41,13 +48,14 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
             AdvisedSupport advisedSupport = new AdvisedSupport();
             TargetSource targetSource = null;
             try {
+                // TODO 实例化优化
                 targetSource = new TargetSource(beanClass.getDeclaredConstructor().newInstance());
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                      NoSuchMethodException e) {
                 e.printStackTrace();
             }
             advisedSupport.setTargetSource(targetSource);
-            // TODO
+            // MethodInterceptor extends Interceptor extends Advice
             advisedSupport.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
             advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher());
             advisedSupport.setProxyTargetClass(false);
