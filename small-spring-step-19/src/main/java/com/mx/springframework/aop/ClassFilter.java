@@ -15,4 +15,6 @@ public interface ClassFilter {
      * @return 建议是否适用于给定的目标类
      */
     boolean matches(Class<?> clazz);
+
+    ClassFilter TRUE = TrueClassFilter.INSTANCE;
 }

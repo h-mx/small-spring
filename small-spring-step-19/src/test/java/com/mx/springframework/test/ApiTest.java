@@ -1,91 +1,84 @@
 package com.mx.springframework.test;
 
+import com.alibaba.druid.pool.DruidDataSource;
+import com.mx.springframework.aop.AdvisedSupport;
+import com.mx.springframework.aop.TargetSource;
+import com.mx.springframework.aop.framework.ProxyFactory;
 import com.mx.springframework.context.support.ClassPathXmlApplicationContext;
+import com.mx.springframework.jdbc.datasource.DataSourceTransactionManager;
 import com.mx.springframework.jdbc.support.JdbcTemplate;
+import com.mx.springframework.test.service.JdbcService;
+import com.mx.springframework.test.service.impl.JdbcServiceImpl;
+import com.mx.springframework.tx.transaction.annotation.AnnotationTransactionAttributeSource;
+import com.mx.springframework.tx.transaction.interceptor.BeanFactoryTransactionAttributeSourceAdvisor;
+import com.mx.springframework.tx.transaction.interceptor.TransactionAttribute;
+import com.mx.springframework.tx.transaction.interceptor.TransactionInterceptor;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.Map;
+import javax.sql.DataSource;
+import java.lang.reflect.Method;
 
 public class ApiTest {
 
     private JdbcTemplate jdbcTemplate;
 
+//    private JdbcService jdbcService;
+
+    private DataSource dataSource;
+
     @Before
     public void init() {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
         jdbcTemplate = applicationContext.getBean(JdbcTemplate.class);
+        dataSource = applicationContext.getBean(DruidDataSource.class);
+
+//        jdbcService = applicationContext.getBean(JdbcServiceImpl.class);
     }
 
-
     @Test
-    public void executeSqlTest() {
-
-        jdbcTemplate.execute("        CREATE TABLE `user` (\n" +
-                             "  `id` int NOT NULL AUTO_INCREMENT,\n" +
-                             "  `username` varchar(100) DEFAULT NULL,\n" +
-                             "        PRIMARY KEY (`id`),\n" +
-                             "        UNIQUE KEY `user_id_uindex` (`id`)\n" +
-                             ") ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci");
-    }
-
-
-    @Test
-    public void queryForListTest() {
-        List<Map<String, Object>> allResult = jdbcTemplate.queryForList("select * from user");
-        for (int i = 0; i < allResult.size(); i++) {
-            System.out.printf("第%d行数据", i + 1);
-            Map<String, Object> objectMap = allResult.get(i);
-            System.out.println(objectMap);
+    public void matchTransactionAnnotationTest() {
+        JdbcService jdbcService = new JdbcServiceImpl();
+        AnnotationTransactionAttributeSource transactionAttributeSource = new AnnotationTransactionAttributeSource();
+        Method[] methods = jdbcService.getClass().getMethods();
+        Method targetMethod = null;
+        for (Method method : methods) {
+            if (method.getName().equals("saveData")) {
+                targetMethod = method;
+                break;
+            }
         }
+        TransactionAttribute transactionAttribute = transactionAttributeSource.getTransactionAttribute(targetMethod, jdbcService.getClass());
+        System.out.println(transactionAttribute.getName());
     }
 
     @Test
-    public void queryListWithColumnClassTypeTest() {
-        List<String> allResult = jdbcTemplate.queryForList("select username from user", String.class);
-        for (int i = 0; i < allResult.size(); i++) {
-            System.out.printf("第%d行数据", i + 1);
-            String username = allResult.get(i);
-            System.out.println(username);
-        }
+    public void jdbcWithTransaction() {
+
+        JdbcService jdbcService = new JdbcServiceImpl();
+
+        AnnotationTransactionAttributeSource transactionAttributeSource = new AnnotationTransactionAttributeSource();
+        transactionAttributeSource.findTransactionAttribute(jdbcService.getClass());
+
+
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
+        TransactionInterceptor interceptor = new TransactionInterceptor(transactionManager, transactionAttributeSource);
+
+        BeanFactoryTransactionAttributeSourceAdvisor btas = new BeanFactoryTransactionAttributeSourceAdvisor();
+        btas.setAdvice(interceptor);
+
+
+        AdvisedSupport advisedSupport = new AdvisedSupport();
+        advisedSupport.setTargetSource(new TargetSource(jdbcService));
+        advisedSupport.setMethodInterceptor(interceptor);
+        advisedSupport.setMethodMatcher(btas.getPointcut().getMethodMatcher());
+        advisedSupport.setProxyTargetClass(false);
+
+        JdbcService proxy = (JdbcService)new ProxyFactory(advisedSupport).getProxy();
+
+
+        proxy.saveData(jdbcTemplate);
     }
 
-    @Test
-    public void queryListWithColumnClassTypeWithArgTest() {
-        List<String> allResult = jdbcTemplate.queryForList("select username from user where id=?", String.class, 1001);
-        for (int i = 0; i < allResult.size(); i++) {
-            System.out.printf("第%d行数据", i + 1);
-            String username = allResult.get(i);
-            System.out.println(username);
-        }
-    }
 
-    @Test
-    public void queryListWithArgTest() {
-        List<Map<String, Object>> allResult = jdbcTemplate.queryForList("select * from user where id=?", 1001);
-        for (int i = 0; i < allResult.size(); i++) {
-            System.out.printf("第%d行数据", i + 1);
-            Map<String, Object> row = allResult.get(i);
-            System.out.println(row);
-        }
-    }
-
-    @Test
-    public void queryObjectTest() {
-        String username = jdbcTemplate.queryForObject("select username from user where id=1001", String.class);
-        System.out.println(username);
-    }
-
-    @Test
-    public void queryMapTest() {
-        Map<String, Object> row = jdbcTemplate.queryForMap("select * from user where id=1001");
-        System.out.println(row);
-    }
-
-    @Test
-    public void queryMapWithArgTest() {
-        Map<String, Object> row = jdbcTemplate.queryForMap("select * from user where id=?", 1001);
-        System.out.println(row);
-    }
 }
