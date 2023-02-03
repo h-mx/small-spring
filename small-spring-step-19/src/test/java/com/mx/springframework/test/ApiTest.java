@@ -23,7 +23,7 @@ public class ApiTest {
 
     private JdbcTemplate jdbcTemplate;
 
-//    private JdbcService jdbcService;
+    private JdbcService jdbcService;
 
     private DataSource dataSource;
 
@@ -33,7 +33,7 @@ public class ApiTest {
         jdbcTemplate = applicationContext.getBean(JdbcTemplate.class);
         dataSource = applicationContext.getBean(DruidDataSource.class);
 
-//        jdbcService = applicationContext.getBean(JdbcServiceImpl.class);
+        jdbcService = applicationContext.getBean(JdbcServiceImpl.class);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class ApiTest {
     @Test
     public void jdbcWithTransaction() {
 
-        JdbcService jdbcService = new JdbcServiceImpl();
+//        JdbcService jdbcService = new JdbcServiceImpl();
 
         AnnotationTransactionAttributeSource transactionAttributeSource = new AnnotationTransactionAttributeSource();
         transactionAttributeSource.findTransactionAttribute(jdbcService.getClass());
