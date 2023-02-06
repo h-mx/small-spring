@@ -3,7 +3,7 @@ package com.mx.springframework.test;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.mx.springframework.aop.AdvisedSupport;
 import com.mx.springframework.aop.TargetSource;
-import com.mx.springframework.aop.framework.ProxyFactory;
+import com.mx.springframework.aop.framework.Cglib2AopProxy;
 import com.mx.springframework.context.support.ClassPathXmlApplicationContext;
 import com.mx.springframework.jdbc.datasource.DataSourceTransactionManager;
 import com.mx.springframework.jdbc.support.JdbcTemplate;
@@ -23,7 +23,7 @@ public class ApiTest {
 
     private JdbcTemplate jdbcTemplate;
 
-    private JdbcService jdbcService;
+//    private JdbcService jdbcService;
 
     private DataSource dataSource;
 
@@ -33,7 +33,7 @@ public class ApiTest {
         jdbcTemplate = applicationContext.getBean(JdbcTemplate.class);
         dataSource = applicationContext.getBean(DruidDataSource.class);
 
-        jdbcService = applicationContext.getBean(JdbcServiceImpl.class);
+//        jdbcService = applicationContext.getBean(JdbcServiceImpl.class);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class ApiTest {
     @Test
     public void jdbcWithTransaction() {
 
-//        JdbcService jdbcService = new JdbcServiceImpl();
+        JdbcService jdbcService = new JdbcServiceImpl();
 
         AnnotationTransactionAttributeSource transactionAttributeSource = new AnnotationTransactionAttributeSource();
         transactionAttributeSource.findTransactionAttribute(jdbcService.getClass());
@@ -74,10 +74,11 @@ public class ApiTest {
         advisedSupport.setMethodMatcher(btas.getPointcut().getMethodMatcher());
         advisedSupport.setProxyTargetClass(false);
 
-        JdbcService proxy = (JdbcService)new ProxyFactory(advisedSupport).getProxy();
+//        JdbcService proxy = (JdbcService)new ProxyFactory(advisedSupport).getProxy();
+        JdbcService proxyCglib = (JdbcServiceImpl) new Cglib2AopProxy(advisedSupport).getProxy();
 
 
-        proxy.saveData(jdbcTemplate);
+        proxyCglib.saveData(jdbcTemplate);
     }
 
 

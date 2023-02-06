@@ -2,12 +2,14 @@ package com.mx.springframework.test.service.impl;
 
 
 import com.mx.springframework.jdbc.support.JdbcTemplate;
+import com.mx.springframework.stereotype.Component;
 import com.mx.springframework.test.service.JdbcService;
 import com.mx.springframework.tx.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.sql.Statement;
 
+@Component
 public class JdbcServiceImpl implements JdbcService {
 
     private Statement statement;

@@ -16,6 +16,25 @@ import java.util.ArrayList;
  * @date 2023/2/3
  */
 public class SpringTransactionAnnotationParser implements TransactionAnnotationParser, Serializable {
+
+//    @Override
+//    public TransactionAttribute parseTransactionAnnotation(AnnotatedElement element) {
+//        Transactional transactional = element.getAnnotation(Transactional.class);
+//        if (transactional == null) return null;
+//
+//        RuleBasedTransactionAttribute rbta = new RuleBasedTransactionAttribute();
+//        ArrayList<RollbackRuleAttribute> rollbackRules = new ArrayList<>();
+//        Class<? extends Throwable>[] rbRules = transactional.rollbackFor();
+//        if (rbRules == null) {
+//            return rbta;
+//        }
+//        for (Class<?> rbRule : transactional.rollbackFor()) {
+//            rollbackRules.add(new RollbackRuleAttribute(rbRule));
+//        }
+//        rbta.setRollbackRules(rollbackRules);
+//        return rbta;
+//    }
+
     @Override
     public TransactionAttribute parseTransactionAnnotation(AnnotatedElement element) {
         AnnotationAttributes attributes = AnnotatedElementUtils.findMergedAnnotationAttributes(element, Transactional.class, false, false);
